@@ -7,7 +7,7 @@ const {
 } = require('telegraf');
 const cron = require('node-cron')
 const pollSender = require("./sendPoll");
-const botToken = require('./config.json').botToken;
+const botToken = process.env.BOT_TOKEN;
 
 const bot = new Telegraf(botToken);
 
