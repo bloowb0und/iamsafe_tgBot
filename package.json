@@ -1,0 +1,21 @@
+{
+  "name": "iamsafe-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "node": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "mongodb": "^4.5.0",
+    "node-cron": "^3.0.0",
+    "telegraf": "^4.7.0"
+  }
+}
