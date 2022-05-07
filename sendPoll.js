@@ -14,6 +14,7 @@ module.exports = class PollSender {
 
             const msgText = await this.getMessageContent(bot, group.group_tgid, curDate, answeredToday);
 
+            await bot.telegram.sendSticker(group.group_tgid, 'CAACAgIAAxkBAAEErUJidu1jELPvVAigVsEsuE7dNY4CJAAC0wIAAlneOg9uYYXSzxhQiyQE');
             const pollMsgId = await bot.telegram.sendMessage(group.group_tgid, msgText, {
                 parse_mode: 'HTML',
                 ...Markup.inlineKeyboard([
@@ -45,7 +46,7 @@ module.exports = class PollSender {
         const curDate = `${new Date().getUTCFullYear()}/${new Date().getUTCMonth() + 1}/${new Date().getUTCDate()}`;
         const answeredToday = (await dbService.getUserChecksByDate(curDate));
 
-        const msgText = await this.getMessageContent(bot, groupId, curDate, answeredToday);
+        const msgText = await this.getMessageContent(bot, groupId, curDate, answeredToday, false);
         const chatId = ((await dbService.getGroupByTelegramId(groupId))[0].group_pollsMsgIds.slice(-1))[0]; // get latest poll msg id
 
         await bot.telegram.editMessageText(groupId, chatId, null, msgText, {
@@ -56,13 +57,13 @@ module.exports = class PollSender {
         });
     }
 
-    static async getMessageContent(bot, groupTgId, curDate, answeredToday) {
+    static async getMessageContent(bot, groupTgId, curDate, answeredToday, isFirstForDay = true) {
         const groupRegisteredUsers = (await dbService.getUsersWithGroup(groupTgId));
         const amountInGroup = await bot.telegram.getChatMembersCount(groupTgId) - 1; // chat members without bot
         const amountConnected = groupRegisteredUsers.length;
         const amountAnswered = answeredToday.length;
 
-        const skipped = await dbService.getNotContactedUsers(groupRegisteredUsers, answeredToday);
+        const skipped = await dbService.getNotContactedUsers(groupRegisteredUsers, answeredToday, isFirstForDay);
 
         const answeredGroupByPlace = await dbService.getAnsweredByDateGroupByPlace(curDate);
 

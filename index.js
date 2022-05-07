@@ -26,7 +26,6 @@ bot.action('yesIAmSafe', async (ctx) => {
 })
 
 cron.schedule('0 11 * * *', async () => {
-        // bot.telegram.sendMessage('181241475', 'THIS MESSAGE SENDS EVERY MINUTE!');
     try {
         await pollSender.sendMessageToGroups(bot);
     } catch (e) {

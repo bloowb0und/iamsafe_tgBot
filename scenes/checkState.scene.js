@@ -37,7 +37,7 @@ module.exports = new Scenes.WizardScene(
         {
             case 'abroad':
                 ctx.session.region = 'За кордоном';
-                return ctx.wizard.steps[3](ctx);
+                return ctx.wizard.steps[2](ctx);
                 break;
 
             case 'vinnitsaReg':

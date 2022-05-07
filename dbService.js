@@ -117,7 +117,7 @@ class dbService {
         }
     }
 
-    static async getNotContactedUsers(groupRegisteredUsers, answeredToday) {
+    static async getNotContactedUsers(groupRegisteredUsers, answeredToday, isFirstForDay) {
         let notContactedUsers = [];
 
         for(let user of groupRegisteredUsers)
@@ -133,7 +133,9 @@ class dbService {
 
             if(!res)
             {
-                (await dbService.addSkippedPoll(user.user_tgid))
+                if(isFirstForDay) {
+                    (await dbService.addSkippedPoll(user.user_tgid))
+                }
                 notContactedUsers.push(user.user_tgid);
             }
         }
