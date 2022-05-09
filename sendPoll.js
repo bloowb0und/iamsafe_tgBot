@@ -29,6 +29,7 @@ module.exports = class PollSender {
             for(const user of groupUsers) {
                 const chatId = user.user_tgid;
                 if(!usersWithSentChecks.includes(chatId)) {
+                    await dbService.setStartedCheckingToday(user.user_tgid, false);
                     await bot.telegram.sendMessage(chatId, `Привіт!\nВи на зв'язку? 📱`, {
                         parse_mode: 'HTML',
                         ...Markup.inlineKeyboard([

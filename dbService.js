@@ -50,9 +50,19 @@ class dbService {
                 user_tgid: tgId,
                 user_firstname: firstname,
                 user_skippedPolls: 0,
-                user_groups: []
+                user_groups: [],
+                user_startedCheckingToday: false
             });
             return true;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
+
+    static async setStartedCheckingToday(tgId, state) {
+        try {
+            (await this.getUsersDev()).updateOne({user_tgid: tgId}, {$set: {user_startedCheckingToday: state}});
         } catch (e) {
             console.log(e);
             return false;
