@@ -30,7 +30,7 @@ module.exports = new Scenes.WizardScene(
     },
     async (ctx) => {
         const userTgId = ctx.update.callback_query.from.id;
-        const curUser = await dbService.getUserByTelegramId(userTgId);
+        const curUser = (await dbService.getUserByTelegramId(userTgId))[0];
 
         if(curUser.user_startedCheckingToday === true) {
             await ctx.answerCbQuery()
@@ -391,7 +391,7 @@ module.exports = new Scenes.WizardScene(
     },
     async (ctx) => {
         const userTgId = ctx.update.callback_query.from.id;
-        const curUser = await dbService.getUserByTelegramId(userTgId);
+        const curUser = (await dbService.getUserByTelegramId(userTgId))[0];
 
         if(curUser.user_startedCheckingToday === true) {
             const cities = require('../info/cities');
